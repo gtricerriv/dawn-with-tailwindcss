@@ -4,8 +4,8 @@
     "dev": "run-p -sr shopify:dev watch",
     "shopify:dev": "shopify theme dev",
     "build": "vite build --minify",
-    "watch": "npx tailwindcss -i ./assets/app-tailwind.css -o ./assets/app.css -c ./tailwind.config.js -w",
-    "minify": "npx tailwindcss -i ./assets/app-tailwind.css -o ./assets/app.css --minify"
+    "watch": "npx tailwindcss -i ./assets/app-tailwind.css -o ./assets/styles.css -c ./tailwind.config.js -w",
+    "minify": "npx tailwindcss -i ./assets/app-tailwind.css -o ./assets/styles.css --minify"
   },
   "devDependencies": {
     "@shopify/cli": "latest",
