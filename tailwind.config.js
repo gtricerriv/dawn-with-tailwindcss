@@ -1,18 +1,33 @@
 import remToPxPlugin from 'tailwindcss-rem-to-px';
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    // Use prefix tw- to avoid conflicts with other Dawn styles
-    // prefix: 'tw-',
-    content: [
-        "./**/*.{js,json,liquid}",
-    ],
-    theme: {
-        extend: {},
-    },
-    plugins: [
-        remToPxPlugin({
-            baseFontSize: 16,
-        })
-    ],
+	prefix: 'tw-',
+  important: true,
+	content: [
+		'./layout/*.liquid',
+		'./templates/*.liquid',
+		'./templates/customers/*.liquid',
+		'./sections/*.liquid',
+		'./snippets/*.liquid',
+	],
+	theme: {
+		screens: {
+			'md': '750px',
+			'lg': '990px',
+			'xl': '1440px',
+			'2xl': '1920px',
+			'3xl': '2100px'
+		},
+		extend: {},
+		colors: {
+			...colors,
+		}
+	},
+	plugins: [
+		remToPxPlugin({
+			baseFontSize: 16,
+		})
+	],
 }
