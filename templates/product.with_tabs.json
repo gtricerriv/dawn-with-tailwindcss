@@ -148,8 +148,10 @@
         "items_included_in_package_gpy87m": {
           "type": "items-included-in-package",
           "settings": {
-            "title": "asdsa",
-            "number_items": 3
+            "heading": "Items included in Package",
+            "title": "Items",
+            "number_items": 5,
+            "button_text": "Fetch"
           }
         }
       },
@@ -163,13 +165,13 @@
         "heading": "Section title",
         "heading_size": "hxl",
         "set_border": true,
-        "heading_bg_color": "transparent",
+        "heading_bg_color": "rgba(0,0,0,0)",
         "active_tab_bg": "#dddddd",
         "allow_border_on_buttons": true,
-        "background_inactive": "transparent",
+        "background_inactive": "rgba(0,0,0,0)",
         "text_inactive": "#000000",
-        "bg_on_hover": "#ddd",
-        "text_on_hover": "#000",
+        "bg_on_hover": "#dddddd",
+        "text_on_hover": "#000000",
         "padding_top": 40,
         "padding_bottom": 52
       }
