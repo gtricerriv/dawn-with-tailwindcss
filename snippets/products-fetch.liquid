@@ -21,6 +21,7 @@
           const list = document.createElement('ul');
           list.classList.add('tw-flex');
           list.classList.add('tw-flex-wrap')
+          list.classList.add('tw-list-none')
           for (let index = 0; index <  {{ number_items }}; index++) {
             let item = data[index];
             const truncatedTitle = item.title.split(' ').slice(0, 3).join(' ');
