@@ -1,6 +1,6 @@
 <div>
     <p id="initial-text" class="tw-hidden">{{ title }}</p>
-    <button id="fire-fetch" class="tw-p-2 tw-bg-blue-500 tw-text-white">Fetch data...}}</button>
+    <button id="fire-fetch" class="tw-p-2 tw-bg-blue-500 tw-text-white">Fetch data...</button>
     <div id="loading" class="loading tw-text-center tw-mt-5 tw-hidden">Loading...</div>
     <div id="data-container" class="tw-flex tw-flex-wrap tw-flex-row"></div>
   </div>
@@ -8,7 +8,6 @@
     document.addEventListener("DOMContentLoaded", (event) => {
       async function fetchAndDisplayData() {
         try {
-          // Mostrar el indicador de carga
           document.getElementById('loading').classList.remove('tw-hidden');
           document.getElementById('fire-fetch').classList.add('tw-hidden');
           document.getElementById('initial-text').classList.add('tw-hidden');
@@ -24,7 +23,7 @@
           list.classList.add('tw-flex-wrap')
           for (let index = 0; index <  {{ number_items }}; index++) {
             let item = data[index];
-            const truncatedTitle = item.title.split(' ').slice(0, 3).join(' '); // Truncar el título a 5 palabras
+            const truncatedTitle = item.title.split(' ').slice(0, 3).join(' ');
             const listItem = document.createElement('li');
             listItem.style.border = "solid"
             item.completed ? listItem.classList.add('tw-border-green-400') : listItem.classList.add('tw-border-red-400')
@@ -43,11 +42,9 @@
           }
           dataContainer.appendChild(list);
   
-          // Ocultar el indicador de carga
           document.getElementById('loading').classList.add('tw-hidden');
         } catch (error) {
           console.error('Error:', error);
-          // Ocultar el indicador de carga
           document.getElementById('loading').classList.add('tw-hidden');
         }
       }

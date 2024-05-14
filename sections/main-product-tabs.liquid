@@ -86,7 +86,7 @@
           </div>
         {%- when 'items-included-in-package' -%}
           <div id="itemsInPackage" class="tabcontent {% if section.settings.set_border == true %} tw-border tw-border-solid tw-border-[#cccccc] {% endif %} tw-border-t-0 tw-px-2 tw-py-4">
-           HERE GOES CODE
+            {%- render 'products-fetch', title: block.settings.title, number_items: block.settings.title -%}
           </div>
         {%- endcase -%}
     {%- endfor -%}
@@ -274,6 +274,21 @@
             "id": "heading",
             "label": "Heading tab",
             "default": "Items included in Package"
+          },
+          {
+            "type": "inline_richtext",
+            "id": "title",
+            "label": "Heading Content",
+            "default": "Items included in Package"
+          },
+          {
+            "type": "range",
+            "id": "number_items",
+            "min": 3,
+            "max": 10,
+            "step": 1,
+            "label": "Number Items",
+            "default": 3
           }
         ]
       }
