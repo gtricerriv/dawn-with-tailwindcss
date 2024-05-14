@@ -1,0 +1,287 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .tab {
+    overflow: hidden;
+    background-color: {{ section.settings.heading_bg_color }};
+  }
+  .tab button.active {
+    background-color: {{  section.settings.active_tab_bg }};
+  }
+  .tab button {
+    background-color: {{ section.settings.background_inactive }};
+    color: {{ section.settings.text_inactive }};
+    transition: 0.3s;
+  }
+  .tab button:hover{
+    background: {{ section.settings.bg_on_hover }};
+    color: {{ section.settings.text_on_hover }};
+  }
+  .tabcontent {
+    display: none;
+  }
+  .main-product-tabs ul {
+    list-style: disc;
+    margin-left: 2rem;
+  }
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding">
+  {%- if section.index == 1 -%}
+    <h1 class="{{ section.settings.heading_size }} tw-text-center tw-mb-8 tw-font-heading tw-tracking-wider">
+  {%- else -%}
+    <h2 class="{{ section.settings.heading_size }} tw-text-center tw-mb-8 tw-font-heading tw-tracking-wider">
+  {%- endif -%}
+    {{ section.settings.heading }}
+  {%- if section.index == 1 -%}
+    </h1>
+  {%- else -%}
+    </h2>
+  {%- endif -%}
+  <div class="new-description-table">
+    
+    <div class="tab {% if section.settings.set_border == true %} tw-border tw-border-solid tw-border-[#cccccc] {% endif %}">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'product-description' -%}
+            {%- if product.description != blank -%}
+            <button class="tablinks {% if section.settings.allow_border_on_buttons == true %} tw-border-solid tw-border {% endif %} tw-float-left tw-outline-none tw-cursor-pointer tw-py-[14px] tw-px-4 tw-text-lg" onclick="openTab(event, 'productDescription')" id="defaultOpen">{{ block.settings.heading }}</button>
+            {%- endif -%}
+          {%- when 'key-features' -%}
+            {%- if product.metafields.test_data.details_about_product != blank -%}
+            <button class="tablinks {% if section.settings.allow_border_on_buttons == true %} tw-border-solid tw-border {% endif %} tw-float-left tw-outline-none tw-cursor-pointer tw-py-[14px] tw-px-4 tw-text-lg" onclick="openTab(event, 'keyFeatures')" id="defaultOpen">{{ block.settings.heading }}</button>
+            {%- endif -%}
+          {%- when 'shipping-info' -%}
+          <button class="tablinks {% if section.settings.allow_border_on_buttons == true %} tw-border-solid tw-border {% endif %} tw-float-left tw-outline-none tw-cursor-pointer tw-py-[14px] tw-px-4 tw-text-lg" onclick="openTab(event, 'shippingInfo')" id="defaultOpen">{{ block.settings.heading }}</button>
+          {%- when 'items-included-in-package' -%}
+          <button class="tablinks {% if section.settings.allow_border_on_buttons == true %} tw-border-solid tw-border {% endif %} tw-float-left tw-outline-none tw-cursor-pointer tw-py-[14px] tw-px-4 tw-text-lg" onclick="openTab(event, 'itemsInPackage')" id="defaultOpen">{{ block.settings.heading }}</button>
+          {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if product.description != blank -%}
+      <div id="productDescription" class="tabcontent {% if section.settings.set_border == true %} tw-border tw-border-solid tw-border-[#cccccc] {% endif %} tw-border-t-0 tw-px-2 tw-py-4">
+        {{ product.description }}
+      </div>
+    {%- endif -%}
+    {%- if product.metafields.test_data.details_about_product != blank -%}
+      <div id="keyFeatures"  class="tabcontent {% if section.settings.set_border == true %} tw-border tw-border-solid tw-border-[#cccccc] {% endif %} tw-border-t-0 tw-px-2 tw-py-4">
+        {{ product.metafields.test_data.details_about_product | metafield_tag }} 
+      </div>
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'shipping-info' -%}
+          <div id="shippingInfo" class="tabcontent {% if section.settings.set_border == true %} tw-border tw-border-solid tw-border-[#cccccc] {% endif %} tw-border-t-0 tw-px-2 tw-py-4">
+            {{ block.settings.shipping_info }}
+          </div>
+        {%- when 'items-included-in-package' -%}
+          <div id="itemsInPackage" class="tabcontent {% if section.settings.set_border == true %} tw-border tw-border-solid tw-border-[#cccccc] {% endif %} tw-border-t-0 tw-px-2 tw-py-4">
+           HERE GOES CODE
+          </div>
+        {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+<script>
+  function openTab(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+</script>
+
+{% schema %}
+  {
+    "name": "Main Product Tabs",
+    "tag": "section",
+    "class": "main-product-tabs",
+    "settings": [
+      {
+        "type": "inline_richtext",
+        "id": "heading",
+        "default": "Section title",
+        "label": "Heading"
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "options": [
+          {
+            "value": "h1",
+            "label": "t:sections.all.heading_size.options__1.label"
+          },
+          {
+            "value": "h0",
+            "label": "t:sections.all.heading_size.options__2.label"
+          },
+          {
+            "value": "hxl",
+            "label": "t:sections.all.heading_size.options__3.label"
+          }
+        ],
+        "default": "hxl",
+        "label": "t:sections.all.heading_size.label"
+      },
+      {
+        "type": "header",
+        "content": "Tab config styles"
+      },
+      {
+        "type": "checkbox",
+        "id": "set_border",
+        "label": "Set table border",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "heading_bg_color",
+        "label": "Heading default tab color",
+        "default": "transparent"
+      },
+      {
+        "type": "color",
+        "id": "active_tab_bg",
+        "label": "Active tab background color",
+        "default": "#dddddd"
+      },
+      {
+        "type": "checkbox",
+        "id": "allow_border_on_buttons",
+        "label": "Allow border on buttons",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_inactive",
+        "label": "Background inactive tab",
+        "default": "transparent"
+      },
+      {
+        "type": "color",
+        "id": "text_inactive",
+        "label": "Text color inactive tab",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "bg_on_hover",
+        "label": "Background on hover tab heading",
+        "default": "#ddd"
+      },
+      {
+        "type": "color",
+        "id": "text_on_hover",
+        "label": "Text on hover tab heading",
+        "default": "#000"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 52
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product-description",
+        "limit": 1,
+        "name": "Product Description",
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "heading",
+            "default": "Product Description",
+            "label": "Tab heading"
+          }
+        ]
+      },
+      {
+        "type": "key-features",
+        "limit": 1,
+        "name": "Key features",
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "heading",
+            "default": "Key Features",
+            "label": "Tab heading"
+          }
+        ]
+      },
+      {
+        "type": "shipping-info",
+        "name": "Shipping info",
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Shipping info"
+          },
+          {
+            "type": "richtext",
+            "id": "shipping_info",
+            "label": "Shipping information"
+          }
+        ]
+      },
+      {
+        "type": "items-included-in-package",
+        "name": "Items included",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "heading",
+            "label": "Heading tab",
+            "default": "Items included in Package"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Main Product Tabs"
+      }
+    ]
+  }
+{% endschema %}
